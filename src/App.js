@@ -4,13 +4,13 @@ import Button from "@material-ui/core/Button";
 import { isMobile } from "react-device-detect";
 
 function App() {
+  // const [isCaptureEnable, setCaptureEnable] = useState(true);
+  // const [showOpenBtn, setShowOpenBtn] = useState(true);
+
+
   const [isCaptureEnable, setCaptureEnable] = useState(true);
-  const [showOpenBtn, setShowOpenBtn] = useState(true);
-
-
-  // const [isCaptureEnable, setCaptureEnable] = useState(false);
-  // const [showOpenBtn, setShowOpenBtn] = useState(false);
-  // for start button 
+  const [showOpenBtn, setShowOpenBtn] = useState(false);
+  // for start button disable
 
   const showOpenBtnFn = () => {
     setShowOpenBtn(true);
@@ -42,7 +42,7 @@ function App() {
           Open Camera
         </Button>
       )}
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         style={{ marginBottom: "20px" }}
@@ -51,7 +51,7 @@ function App() {
         }}
       >
         Start
-      </Button>
+      </Button> */}
       {isCaptureEnable && <WebcamCapture setShowOpenBtn={showOpenBtnFn} />}
     </div>
   );

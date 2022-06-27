@@ -4,7 +4,8 @@ import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-
+var i=0;
+var data=[];
 export const WebcamCapture = (props) => {
   const { setShowOpenBtn } = props;
   const [disbleCapture, setDisbleCapture] = useState(true);
@@ -31,6 +32,11 @@ export const WebcamCapture = (props) => {
   const capture = async () => {
     // alert(isMobile);
     const imageSrc = webcamRef.current?.getScreenshot();
+    console.log(imageSrc);
+    // data.push({
+    //   photo:i,
+    //   src:imageSrc
+    // });
     const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
     // console.log(newFile)
     // setImg_url(newFile)
@@ -72,6 +78,7 @@ export const WebcamCapture = (props) => {
     });
   };
 
+// console.log({data});  
   return (
     <Dialog open={open} fullWidth onClose={handleClose}>
       <div style={{ justifyContent: "center", textAlign: "center" }}>
@@ -92,7 +99,7 @@ export const WebcamCapture = (props) => {
             // }}
             height={"100%"}
             width={"100%"}
-            screenshotFormat="image/webp"
+            screenshotFormat="image/jpeg"
             videoConstraints={{
               height: 1080,
               width: 1920,
@@ -121,6 +128,7 @@ export const WebcamCapture = (props) => {
               </span>
             );
           })}
+
         </div>
       
       </div>
