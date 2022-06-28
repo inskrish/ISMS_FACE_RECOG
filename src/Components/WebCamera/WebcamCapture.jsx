@@ -4,9 +4,13 @@ import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import axios from "axios";
+
 
 var i=0;
 var data=[];
+const baseURL = "https://11.0.0.221:8000/uploadImage";
+
 export const WebcamCapture = (props) => {
   const { setShowOpenBtn } = props;
   const [disbleCapture, setDisbleCapture] = useState(true);
@@ -29,9 +33,15 @@ export const WebcamCapture = (props) => {
         "base64"
       );
     });
-
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+  }
   const capture = async () => {
     // alert(isMobile);
+    for (i = 0; i < 5; i++) {
+      await sleep(1000);
+     
+  
     const imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
     data.push({
@@ -45,6 +55,12 @@ export const WebcamCapture = (props) => {
     // console.log(img_json);
     const newBlob = await resizeFile(newFile);
     setScreenShots((prevState) => [...prevState, newBlob]);
+  }
+  axios
+  .post(baseURL, data)
+  .then((response) => {
+    console.log(response.data)
+  });
   };
 
   const showOpenbtn = () => {

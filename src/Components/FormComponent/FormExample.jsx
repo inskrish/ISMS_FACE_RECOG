@@ -24,7 +24,7 @@ function FormExample() {
               required
               type="text"
               placeholder="First name"
-              defaultValue="Mark"
+              defaultValue=""
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
