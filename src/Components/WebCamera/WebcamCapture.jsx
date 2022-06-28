@@ -60,6 +60,7 @@ export const WebcamCapture = (props) => {
   .post(baseURL, data)
   .then((response) => {
     console.log(response.data)
+    
   });
   };
 
