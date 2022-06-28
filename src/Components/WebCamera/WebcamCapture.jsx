@@ -4,6 +4,7 @@ import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+
 var i=0;
 var data=[];
 export const WebcamCapture = (props) => {
@@ -33,10 +34,10 @@ export const WebcamCapture = (props) => {
     // alert(isMobile);
     const imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
-    // data.push({
-    //   photo:i,
-    //   src:imageSrc
-    // });
+    data.push({
+      photo:i,
+      src:imageSrc
+    });
     const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
     // console.log(newFile)
     // setImg_url(newFile)
@@ -78,10 +79,12 @@ export const WebcamCapture = (props) => {
     });
   };
 
-// console.log({data});  
+console.log({data});  
+
+
   return (
-    <Dialog open={open} fullWidth onClose={handleClose}>
-      <div style={{ justifyContent: "center", textAlign: "center" }}>
+    // <Dialog open={open} fullWidth onClose={handleClose}>
+      <div /*style={{ justifyContent: "center", textAlign: "center" }}*/ >
         <div style={{ padding: "10px" }}>
           <Webcam
             audio={false}
@@ -117,7 +120,7 @@ export const WebcamCapture = (props) => {
           >
             Capture
           </Button>
-       
+          
         </div>
 
         <div style={{ margin: "20px" }}>
@@ -132,7 +135,7 @@ export const WebcamCapture = (props) => {
         </div>
       
       </div>
-    </Dialog>
+    // </Dialog>
   );
 };
 
