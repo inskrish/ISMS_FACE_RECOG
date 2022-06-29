@@ -42,7 +42,7 @@ function App() {
     <Clicktostart/>
     </Col>
     <Col sm={8} style={styles.col}>
-    <FormExample/>
+    {/* <FormExample/> */}
     </Col>
     </Row>
    </div>

@@ -5,58 +5,22 @@ import Resizer from "react-image-file-resizer";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import axios from "axios";
-
+import FormExample from '../FormComponent/FormExample';
+import GetAadhar from "../GetAadhar/GetAadhar"
 
 var i=0;
 var data=[];
-const baseURL = "http://11.0.0.221:8000/temp/";
-
-// useEffect(() => {
-//   // POST request using axios inside useEffect React hook
-//   const article = { title: 'React Hooks POST Request Example' };
-//   axios.post(baseURL, article)
-//       .then(response => console.log(response.data.id));
-
-// // empty dependency array means this effect will only run once (like componentDidMount in classes)
-// }, []);
-
-// useEffect(() => {
-//   axios.post(`/temp`,x).then(res => {
-//     const users = res.data;
-//     console.log(users)
-//   })})
-
-  // axios
-  //   .all([axios.get(`/users`), axios.get(`/api/breeds/image/random`)])
-  //   .then(
-  //     axios.spread((user, dog) => {
-  //       const users = user.data;
-  //       setUsers(users);
-
-  //       const dogs = dog.data;
-  //       setDogs(dogs);
-  //     })
-  //   );
-// }, []);
-
-
+const baseURL = "http://11.0.0.221:8000/uploadImage/";
 
 export const WebcamCapture = (props) => {
   const { setShowOpenBtn } = props;
   const [disbleCapture, setDisbleCapture] = useState(true);
-  // const [img_url, setImg_url] = useState([]);
   const [screenShots, setScreenShots] = useState([]);
   const webcamRef = useRef(null);
-  // var img_json=[]
   const resizeFile = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
-        file,
-        300,
-        200,
-        "JPEG",
-        100,
-        0,
+        file, 300, 200, "JPEG", 100, 0,
         (uri) => {
           resolve(uri);
         },
@@ -68,51 +32,41 @@ export const WebcamCapture = (props) => {
   }
   const capture = async () => {
     // alert(isMobile);
+    setScreenShots([])
     for (i = 0; i < 5; i++) {
       await sleep(1000);
      
   
     let imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
-    // data.push({
-    //   photo:i,
-    //   src:imageSrc
-    // });
     data.push(imageSrc);
 
     const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
-    // console.log(newFile)
-    // setImg_url(newFile)
-    // img_json.push(newFile)
-    // console.log(img_json);
     const newBlob = await resizeFile(newFile);
     setScreenShots((prevState) => [...prevState, newBlob]);
   }
+  let data_arr={'photo0': data[0], 'photo1':data[1], 'photo2': data[2], 'photo3': data[3], 'photo4':data[4]}
 
 
-
-  let data_arr={'photo0': "data[0]", 'photo1':" data[1]", 'photo2': "data[2]", 'photo3': "data[3]", 'photo4':" data[4]"}
-  let data_arr2 = JSON.stringify(data_arr)
-
-
-  // const x = {text:"hello"};
-  // const x="hi"
-  // const response = await axios.post(baseURL, x);
-  // console.log(response.data);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://11.0.0.221:8000/temp/');
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send(data_arr2);
-
-
-
-
+  const form = new FormData();
+  form.append('photo0', data[0]);
+  form.append('photo1', data[1]);
+  form.append('photo2', data[2]);
+  form.append('photo3', data[3]);
+  form.append('photo4', data[4]);
+  const response = await axios.post(baseURL, form);
+  console.log(response.data);
+  if(response.data==="unknown"){
+    alert("Unknown")
+  }
+  else{
+    let name1=response.data.Name;
+    console.log(name1);
+    // <FormExample/> 
+    <GetAadhar/>
+  }
   };
  
-
-
-
   const showOpenbtn = () => {
     setShowOpenBtn();
   };
@@ -197,6 +151,9 @@ console.log({data});
               </span>
             );
           })}
+          {/* {() => {
+            setScreenShots([])
+            }} */}
 
         </div>
       
@@ -204,7 +161,3 @@ console.log({data});
     // </Dialog>
   );
 };
-
-
-
-// export screenShots too 

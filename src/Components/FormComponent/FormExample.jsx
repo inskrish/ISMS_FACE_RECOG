@@ -4,7 +4,6 @@ import Stack from "react-bootstrap/Stack";
 
 function FormExample() {
   const [validated, setValidated] = useState(false);
-
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -24,7 +23,7 @@ function FormExample() {
             required
             type="text"
             placeholder="Name"
-            defaultValue=""
+            defaultValue="bobo"
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
