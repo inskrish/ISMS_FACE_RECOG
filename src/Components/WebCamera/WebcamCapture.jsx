@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState ,useEffect} from "react";
 import Webcam from "react-webcam";
 import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
@@ -9,7 +9,37 @@ import axios from "axios";
 
 var i=0;
 var data=[];
-const baseURL = "https://11.0.0.221:8000/uploadImage";
+const baseURL = "http://11.0.0.221:8000/temp/";
+
+// useEffect(() => {
+//   // POST request using axios inside useEffect React hook
+//   const article = { title: 'React Hooks POST Request Example' };
+//   axios.post(baseURL, article)
+//       .then(response => console.log(response.data.id));
+
+// // empty dependency array means this effect will only run once (like componentDidMount in classes)
+// }, []);
+
+// useEffect(() => {
+//   axios.post(`/temp`,x).then(res => {
+//     const users = res.data;
+//     console.log(users)
+//   })})
+
+  // axios
+  //   .all([axios.get(`/users`), axios.get(`/api/breeds/image/random`)])
+  //   .then(
+  //     axios.spread((user, dog) => {
+  //       const users = user.data;
+  //       setUsers(users);
+
+  //       const dogs = dog.data;
+  //       setDogs(dogs);
+  //     })
+  //   );
+// }, []);
+
+
 
 export const WebcamCapture = (props) => {
   const { setShowOpenBtn } = props;
@@ -23,7 +53,7 @@ export const WebcamCapture = (props) => {
       Resizer.imageFileResizer(
         file,
         300,
-        300,
+        200,
         "JPEG",
         100,
         0,
@@ -42,12 +72,14 @@ export const WebcamCapture = (props) => {
       await sleep(1000);
      
   
-    const imageSrc = webcamRef.current?.getScreenshot();
+    let imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
-    data.push({
-      photo:i,
-      src:imageSrc
-    });
+    // data.push({
+    //   photo:i,
+    //   src:imageSrc
+    // });
+    data.push(imageSrc);
+
     const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
     // console.log(newFile)
     // setImg_url(newFile)
@@ -56,13 +88,30 @@ export const WebcamCapture = (props) => {
     const newBlob = await resizeFile(newFile);
     setScreenShots((prevState) => [...prevState, newBlob]);
   }
-  axios
-  .post(baseURL, data)
-  .then((response) => {
-    console.log(response.data)
-    
-  });
+
+
+
+  let data_arr={'photo0': "data[0]", 'photo1':" data[1]", 'photo2': "data[2]", 'photo3': "data[3]", 'photo4':" data[4]"}
+  let data_arr2 = JSON.stringify(data_arr)
+
+
+  // const x = {text:"hello"};
+  // const x="hi"
+  // const response = await axios.post(baseURL, x);
+  // console.log(response.data);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://11.0.0.221:8000/temp/');
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(data_arr2);
+
+
+
+
   };
+ 
+
+
 
   const showOpenbtn = () => {
     setShowOpenBtn();
