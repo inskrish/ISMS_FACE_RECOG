@@ -3,7 +3,7 @@ import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
 import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
 import AddDetails from "../AddDetails/AddDetails";
-
+import Clicktostartphotodetail from "../AddDetails/Clicktostartphotodetail"
 const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
 function GetAadhar() {
@@ -89,7 +89,9 @@ function GetAadhar() {
 
      
       {display_form && <FormExample data={settling_props} />}
-      {display_Add_new && <AddDetails/>}
+      {/* {display_Add_new && <AddDetails/>} */}
+      {display_Add_new && <Clicktostartphotodetail/>}
+
       {/* { <AddDetails/>} */}
 
     </>

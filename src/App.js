@@ -39,7 +39,7 @@ function App() {
    {/* <div style={styles.Container}>
     <Row style={styles.row}>
     <Col sm={4} style={styles.col}> */}
-    <Clicktostart/>
+    <Clicktostart/> 
     {/* </Col> */}
     {/* <Col sm={8} style={styles.col}> */}
     {/* <FormExample/> */}

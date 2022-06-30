@@ -9,10 +9,11 @@ import FormExample from "../FormComponent/FormExample";
 import GetAadhar from "../GetAadhar/GetAadhar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import AddDetails from "./AddDetails";
 
 var i = 0;
 var data = [];
-const baseURL = "http://11.0.0.221:8000/uploadImage/";
+const baseURL = "http://11.0.0.221:8000/saveDetails/";
 
 export const AddPhotoDetail = (props) => {
   // console.log(props.click);
@@ -72,25 +73,11 @@ export const AddPhotoDetail = (props) => {
     form.append("photo2", data[2]);
     form.append("photo3", data[3]);
     form.append("photo4", data[4]);
-    const response = await axios.post(baseURL, form);
-    console.log(response.data);
 
-    if (response.data === "unknown") {
-      set_display_form(false);
-    } else {
-      set_display_form(true);
-      set_settling_props({
-        ...settling_props,
-        name: response.data.Name,
-        rank: response.data.Rank,
-        phnumber: response.data.Number,
-        aadhar: response.data.Adhar,
-        cat: response.data.Cat,
-        gender: response.data.gender,
-        blacklist: response.data.B,
-        snumber: response.data.snumber,
-      });
-    }
+    // const response = await axios.post(baseURL, form);
+    // console.log(response.data);
+
+    
   };
 
   const showOpenbtn = () => {
@@ -206,8 +193,9 @@ export const AddPhotoDetail = (props) => {
         </Col>
 
         <Col sm={8} style={styles.col}>
-          {display_form && <FormExample data={settling_props} />}
-          {!display_form && <GetAadhar />}
+          {/* {display_form && <FormExample data={settling_props} />}
+          {!display_form && <GetAadhar />} */}
+          <AddDetails data={data} />
 
           {/* </Dialog> */}
         </Col>
@@ -215,6 +203,5 @@ export const AddPhotoDetail = (props) => {
     </div>
   );
 };
-
 
 // export default WebcamCapture

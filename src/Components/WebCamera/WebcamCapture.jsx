@@ -217,4 +217,4 @@ export const WebcamCapture = (props) => {
 };
 
 
-export default WebcamCapture
+// export default WebcamCapture

@@ -1,4 +1,3 @@
-// import { WebcamCapture } from "./WebcamCapture";
 import { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { isMobile } from "react-device-detect";
@@ -7,9 +6,6 @@ import { AddPhotoDetail } from "./AddPhotoDetail";
 
 
 function Clicktostartphotodetail() {
-  // const [isCaptureEnable, setCaptureEnable] = useState(true);
-  // const [showOpenBtn, setShowOpenBtn] = useState(true);
-
 
   const [isCaptureEnable, setCaptureEnable] = useState(true);
   const [showOpenBtn, setShowOpenBtn] = useState(false);
@@ -67,13 +63,3 @@ function Clicktostartphotodetail() {
 
 export default Clicktostartphotodetail;
 
-
-// function Clicktostart() {
-//   return(<>
-// {<WebcamCapture setShowOpenBtn={true} />}
-
-//   </>)
-
-// }
-
-// export default Clicktostart;

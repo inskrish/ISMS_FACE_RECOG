@@ -13,11 +13,13 @@ import Clicktostartphotodetail from "./Clicktostartphotodetail"
 const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
 
 
-function AddDetails() {
+function AddDetails(props) {
+  // alert(props.data[0]);
 
   const [validated, setValidated] = useState(false);
   const [closeCurr, set_closeCurr] = useState(false);
   const [showNext, set_showNext] = useState(false);
+
 
   const [data, setData] = useState({
     name: "",
@@ -40,10 +42,11 @@ function AddDetails() {
 
     setValidated(true);
   };
+  const form = new FormData();
 
   async function submit(e) {
     e.preventDefault();
-    const form = new FormData();
+    
     form.append("name", data.name);
     form.append("rank", data.rank);
     form.append("number", data.phnumber);
@@ -52,14 +55,19 @@ function AddDetails() {
     form.append("category", data.cat);
     form.append("gender", data.gender);
     form.append("snumber", data.snumber);
+    form.append("photo0", props.data[0])
+    form.append("photo1", props.data[1])
+    form.append("photo2", props.data[2])
+    form.append("photo3", props.data[3])
+    form.append("photo4", props.data[4])
     // form.append("token", data.token);
 
 
     const responce = await axios.post(baseURL2, form);
 
     if (responce.data === "success") {
-      set_closeCurr(true);
-      set_showNext(true);
+      set_closeCurr(false);
+      set_showNext(false);
     }
   }
   
@@ -206,7 +214,7 @@ function AddDetails() {
               </Form.Control.Feedback>
             </Form.Group> */}
 
-            <Clicktostartphotodetail/>
+            {/* <Clicktostartphotodetail/> */}
           </Row>
           <Container gap={2} className="col-md-5 mx-auto my-3">
             <Button variant="outline-primary col-md-3 mx-3">
@@ -221,7 +229,8 @@ function AddDetails() {
           </Container>
         </Form>
       )}
-      {showNext && <FormExample data={data} />}
+      {/* {showNext && <FormExample data={data} />} */}
+      {/* {set_closeCurr(true)} */}
     </>
   );
 }
