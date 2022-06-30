@@ -1,12 +1,20 @@
 import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
+// import WebcamCapture from "../WebCamera/WebcamCapture"
+import Clicktostart from "../WebCamera/Clicktostart"
+import Webcam from "react-webcam";
+import Resizer from "react-image-file-resizer";
+import Clicktostartphotodetail from "./Clicktostartphotodetail"
 
-const baseURL = "http://11.0.0.221:8000/saveDetails/";
+
+const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
+
 
 function AddDetails() {
+
   const [validated, setValidated] = useState(false);
   const [closeCurr, set_closeCurr] = useState(false);
   const [showNext, set_showNext] = useState(false);
@@ -20,6 +28,7 @@ function AddDetails() {
     gender: "Male",
     blacklist: "No",
     snumber: "",
+    token: "",
   });
 
   const handleSubmit = (event) => {
@@ -43,8 +52,10 @@ function AddDetails() {
     form.append("category", data.cat);
     form.append("gender", data.gender);
     form.append("snumber", data.snumber);
+    // form.append("token", data.token);
 
-    const responce = await axios.post(baseURL, form);
+
+    const responce = await axios.post(baseURL2, form);
 
     if (responce.data === "success") {
       set_closeCurr(true);
@@ -159,7 +170,7 @@ function AddDetails() {
                 as="select"
                 id="gender"
                 onChange={(e) => handle(e)}
-                value={data.gender}
+                // value={data.gender}
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -173,13 +184,35 @@ function AddDetails() {
                 as="select"
                 id="blacklist"
                 onChange={(e) => handle(e)}
-                 value={data.blacklist}
+                //  value={data.blacklist}
               >
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
               </Form.Control>
             </Form.Group>
+
+            {/* <Form.Group as={Col} md="3">
+              <Form.Label>Token</Form.Label>
+              <Form.Control
+                id="token"
+                onChange={(e) => handle(e)}
+                // value={data.cat}
+                type="number"
+                placeholder="Token"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide Token.
+              </Form.Control.Feedback>
+            </Form.Group> */}
+
+            <Clicktostartphotodetail/>
           </Row>
+          <Container gap={2} className="col-md-5 mx-auto my-3">
+            <Button variant="outline-primary col-md-3 mx-3">
+              Capture Images
+            </Button>
+          </Container>
 
           <Container gap={2} className="col-md-5 mx-auto my-3">
             <Button type="submit" variant="outline-primary col-md-3 mx-3">

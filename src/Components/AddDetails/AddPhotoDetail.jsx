@@ -14,7 +14,7 @@ var i = 0;
 var data = [];
 const baseURL = "http://11.0.0.221:8000/uploadImage/";
 
-export const WebcamCapture = (props) => {
+export const AddPhotoDetail = (props) => {
   // console.log(props.click);
   // const { setShowOpenBtn } = props;
   const [disbleCapture, setDisbleCapture] = useState(true);
@@ -217,4 +217,4 @@ export const WebcamCapture = (props) => {
 };
 
 
-export default WebcamCapture
+// export default WebcamCapture

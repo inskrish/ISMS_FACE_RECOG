@@ -2,28 +2,37 @@ import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
-
 const baseURL = "http://11.0.0.221:8000/makeEntry/";
 
 function FormExample(props) {
   const [validated, setValidated] = useState(false);
 
-  const [btn_state, set_btn_state] = useState("")
+  let value1 = ""
 
   async function submit(e) {
-      set_btn_state(e.target.value, () => {
-        e.preventDefault();
-        console.log(btn_state)
-        const form = new FormData();
-        form.append("val", btn_state);
-        const response =  axios.post(baseURL, form);
-      });
+      value1 = e.target.value
+      e.preventDefault();
+      console.log(value1)
+      const form = new FormData();
+      form.append("val", value1);
+      form.append("name", props.data.name);
+      form.append("rank", props.data.rank);
+      form.append("number", props.data.phnumber);
+      form.append("aadhar", props.data.aadhar);
+      form.append("blacklist", props.data.blacklist);
+      form.append("category", props.data.cat);
+      form.append("gender", props.data.gender);
+      form.append("snumber", props.data.snumber);
+      form.append("token", props.data.token);
+      const response = await axios.post(baseURL, form);
+      alert(response.data);
+      // if(response.data)
   };
-
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
+      console.log("here")
       event.preventDefault();
       event.stopPropagation();
     }
@@ -134,6 +143,19 @@ function FormExample(props) {
             disabled={true}
           />
         </Form.Group>
+
+        {/* <Form.Group as={Col} md="4" controlId="validationCustom01">
+          <Form.Label>Token</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Token"
+            // onChange={(e) => handle(e)}
+            defaultValue={props.data.token}
+            disabled={false}
+          />
+        </Form.Group> */}
+
       </Row>
 
       <Container gap={2} className="col-md-5 mx-auto my-3">
