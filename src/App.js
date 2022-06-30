@@ -36,16 +36,16 @@ function App() {
 <img className="logo" src={require('./mylogo.png')} width="125px" height="125px" />
 <h4 align='center' >Integrated Security Management System</h4>
 </div>
-   <div style={styles.Container}>
+   {/* <div style={styles.Container}>
     <Row style={styles.row}>
-    <Col sm={4} style={styles.col}>
+    <Col sm={4} style={styles.col}> */}
     <Clicktostart/>
-    </Col>
-    <Col sm={8} style={styles.col}>
+    {/* </Col> */}
+    {/* <Col sm={8} style={styles.col}> */}
     {/* <FormExample/> */}
-    </Col>
-    </Row>
-   </div>
+    {/* </Col> */}
+    {/* </Row> */}
+   {/* </div> */}
    </>
   );
 }

@@ -2,7 +2,7 @@ import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
 import Stack from "react-bootstrap/Stack";
 
-function FormExample() {
+function FormExample(props) {
   const [validated, setValidated] = useState(false);
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -13,7 +13,7 @@ function FormExample() {
 
     setValidated(true);
   };
-
+  console.log(props);
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Row className="mb-3">
@@ -23,9 +23,9 @@ function FormExample() {
             required
             type="text"
             placeholder="Name"
-            defaultValue="bobo"
+            defaultValue={props.data.name}
+            disabled={true}
           />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col} md="4" controlId="validationCustom02">
           <Form.Label>Rank</Form.Label>
@@ -33,7 +33,8 @@ function FormExample() {
             required
             type="text"
             placeholder="Rank"
-            defaultValue="Otto"
+            defaultValue={props.data.rank}
+            disabled={true}
           />
           <Form.Control.Feedback>Nice!</Form.Control.Feedback>
         </Form.Group>
@@ -45,6 +46,8 @@ function FormExample() {
               type="text"
               placeholder="Number"
               aria-describedby="inputGroupPrepend"
+              defaultValue={props.data.phnumber}
+              disabled={true}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -55,43 +58,64 @@ function FormExample() {
       </Row>
       <Row className="mb-3">
         <Form.Group as={Col} md="6" controlId="validationCustom03">
-          <Form.Label>SNumber</Form.Label>
-          <Form.Control type="text" placeholder="SNumber" required />
+          <Form.Label>Service Number</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="SNumber"
+            defaultValue={props.data.snumber}
+            disabled={true}
+            required
+          />
           <Form.Control.Feedback type="invalid">
             Please provide a SNumber.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col} md="3" controlId="validationCustom04">
           <Form.Label>AadharCard number</Form.Label>
-          <Form.Control type="text" placeholder="AadharCard number" required />
+          <Form.Control
+            type="text"
+            placeholder="AadharCard number"
+            defaultValue={props.data.aadhar}
+            disabled={true}
+            required
+          />
           <Form.Control.Feedback type="invalid">
             Please provide a AadharCard number.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col} md="3" controlId="validationCustom05">
           <Form.Label>Category</Form.Label>
-          <Form.Control type="text" placeholder="Cat" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide category.
-          </Form.Control.Feedback>
+          <Form.Control
+            type="text"
+            placeholder="Cat"
+            defaultValue={props.data.cat}
+            disabled={true}
+            required
+          />
         </Form.Group>
       </Row>
 
       <Row className="mb-6">
-        <Form.Group as={Col} md="3" controlId="validationCustom06">
+        <Form.Group as={Col} md="4" controlId="validationCustom01">
           <Form.Label>Gender</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Form.Select>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Gender"
+            defaultValue={props.data.gender}
+            disabled={true}
+          />
         </Form.Group>
 
-        <Form.Group as={Col} md="3" controlId="validationCustom06">
+        <Form.Group as={Col} md="4" controlId="validationCustom01">
           <Form.Label>BlackList</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option value="Male">No</option>
-            <option value="Female">Yes</option>
-          </Form.Select>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Blacklist"
+            defaultValue={props.data.blacklist}
+            disabled={true}
+          />
         </Form.Group>
       </Row>
 
