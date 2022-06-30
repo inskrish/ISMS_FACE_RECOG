@@ -1,9 +1,26 @@
 import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
 import Stack from "react-bootstrap/Stack";
+import axios from "axios";
+
+const baseURL = "http://11.0.0.221:8000/makeEntry/";
 
 function FormExample(props) {
   const [validated, setValidated] = useState(false);
+
+  const [btn_state, set_btn_state] = useState("")
+
+  async function submit(e) {
+      set_btn_state(e.target.value, () => {
+        e.preventDefault();
+        console.log(btn_state)
+        const form = new FormData();
+        form.append("val", btn_state);
+        const response =  axios.post(baseURL, form);
+      });
+  };
+
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -120,8 +137,8 @@ function FormExample(props) {
       </Row>
 
       <Container gap={2} className="col-md-5 mx-auto my-3">
-        <Button variant="outline-success col-md-3 mx-3">IN</Button>
-        <Button variant="outline-danger col-md-3 mx-3">OUT</Button>
+        <Button variant="outline-success col-md-3 mx-3" onClick={(e) => submit(e)} id='In' value='In'>IN</Button>
+        <Button variant="outline-danger col-md-3 mx-3" onClick={(e) => submit(e)} id='Out' value='Out'>OUT</Button>
       </Container>
       {/* <Button type="submit">Submit</Button> */}
       {/* <div className="d-grid gap-3 ">

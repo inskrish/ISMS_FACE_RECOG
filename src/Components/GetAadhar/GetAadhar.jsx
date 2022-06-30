@@ -7,7 +7,7 @@ import AddDetails from "../AddDetails/AddDetails";
 const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
 function GetAadhar() {
-    const [show_form,set_show_form]=useState(true);
+    const [show_form, set_show_form]=useState(true);
   const [data, setData] = useState({
     aadhaar: "",
   });
