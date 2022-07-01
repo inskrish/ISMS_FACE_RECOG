@@ -4,6 +4,8 @@ import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
 import AddDetails from "../AddDetails/AddDetails";
 import Clicktostartphotodetail from "../AddDetails/Clicktostartphotodetail"
+// import NewEntry from "../AddDetails/NewEntry";
+
 const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
 function GetAadhar() {
@@ -23,7 +25,7 @@ function GetAadhar() {
   });
   const [display_form, set_display_form] = useState(false);
   const [display_Add_new, set_display_Add_new] = useState(false);
-
+  // const [new_entry, set_new_entry] = useState(false);
   async function submit(e) {
     e.preventDefault();
     const form = new FormData();
@@ -33,8 +35,8 @@ function GetAadhar() {
     if (response.data === "unknown") {
         set_show_form(false)
         set_display_form(false)
-
         set_display_Add_new(true)
+        // set_new_entry(true);
 
     } else {
       set_display_form(true);
@@ -91,7 +93,7 @@ function GetAadhar() {
       {display_form && <FormExample data={settling_props} />}
       {/* {display_Add_new && <AddDetails/>} */}
       {display_Add_new && <Clicktostartphotodetail/>}
-
+      {/* {new_entry && <NewEntry />} */}
       {/* { <AddDetails/>} */}
 
     </>

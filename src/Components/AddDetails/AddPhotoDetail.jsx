@@ -61,10 +61,10 @@ export const AddPhotoDetail = (props) => {
       let imageSrc = webcamRef.current?.getScreenshot();
       console.log(imageSrc);
       data.push(imageSrc);
-
       const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
       const newBlob = await resizeFile(newFile);
       setScreenShots((prevState) => [...prevState, newBlob]);
+
     }
 
     const form = new FormData();

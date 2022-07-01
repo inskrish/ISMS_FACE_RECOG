@@ -9,7 +9,6 @@ import Webcam from "react-webcam";
 import Resizer from "react-image-file-resizer";
 import Clicktostartphotodetail from "./Clicktostartphotodetail"
 
-
 const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
 
 
@@ -19,7 +18,6 @@ function AddDetails(props) {
   const [validated, setValidated] = useState(false);
   const [closeCurr, set_closeCurr] = useState(false);
   const [showNext, set_showNext] = useState(false);
-
 
   const [data, setData] = useState({
     name: "",
@@ -63,12 +61,15 @@ function AddDetails(props) {
     // form.append("token", data.token);
 
 
-    const responce = await axios.post(baseURL2, form);
+    const response = await axios.post(baseURL2, form);
 
-    if (responce.data === "success") {
+    if (response.data === "success") {
       set_closeCurr(false);
       set_showNext(false);
+      alert("Data added successfully..!!");
+      window.location.reload(false);
     }
+
   }
   
   function handle(e) {
@@ -216,11 +217,11 @@ function AddDetails(props) {
 
             {/* <Clicktostartphotodetail/> */}
           </Row>
-          <Container gap={2} className="col-md-5 mx-auto my-3">
+          {/* <Container gap={2} className="col-md-5 mx-auto my-3">
             <Button variant="outline-primary col-md-3 mx-3">
               Capture Images
             </Button>
-          </Container>
+          </Container> */}
 
           <Container gap={2} className="col-md-5 mx-auto my-3">
             <Button type="submit" variant="outline-primary col-md-3 mx-3">

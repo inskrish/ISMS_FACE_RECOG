@@ -76,6 +76,7 @@ export const WebcamCapture = (props) => {
     console.log(response.data);
 
     if (response.data === "unknown") {
+      alert("You are unknown try with aadhar number!!");
       set_display_form(false);
     } else {
       set_display_form(true);
