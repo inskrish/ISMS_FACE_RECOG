@@ -1,13 +1,15 @@
 import { WebcamCapture } from "./WebcamCapture";
-import { useState } from "react";
+import { useState ,useContext} from "react";
 import Button from "@material-ui/core/Button";
 import { isMobile } from "react-device-detect";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserContext } from "../Context/WebcamContext";
 
 
 function Clicktostart() {
   // const [isCaptureEnable, setCaptureEnable] = useState(true);
   // const [showOpenBtn, setShowOpenBtn] = useState(true);
+  const { display_webcam, set_display_webcam } = useContext(UserContext);
 
 
   const [isCaptureEnable, setCaptureEnable] = useState(true);
@@ -45,6 +47,7 @@ function Clicktostart() {
           Warning Camera Not found
         </Button>
       )}
+      {/* {    set_display_webcam(false)} */}
       {/* <Button
         variant="contained"
         color="primary"
@@ -56,6 +59,7 @@ function Clicktostart() {
         Start
       </Button> */}
       {/* {isCaptureEnable && <WebcamCapture setShowOpenBtn={showOpenBtnFn} />} */}
+      {console.log(display_webcam)}
       {isCaptureEnable && <WebcamCapture />}
 
     </div>

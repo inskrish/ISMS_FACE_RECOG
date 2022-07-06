@@ -29,6 +29,7 @@ function AddDetails(props) {
     blacklist: "No",
     snumber: "",
     token: "",
+    // superviser_name:""
   });
 
   const handleSubmit = (event) => {
@@ -53,6 +54,8 @@ function AddDetails(props) {
     form.append("category", data.cat);
     form.append("gender", data.gender);
     form.append("snumber", data.snumber);
+    form.append("token", data.token);
+    // form.append("superviser_name", data.superviser_name);
     form.append("photo0", props.data[0])
     form.append("photo1", props.data[1])
     form.append("photo2", props.data[2])
@@ -108,7 +111,7 @@ function AddDetails(props) {
               <Form.Control.Feedback>Nice!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4">
-              <Form.Label>Number</Form.Label>
+              <Form.Label>Phone Number</Form.Label>
               <InputGroup hasValidation>
                 <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                 <Form.Control
@@ -128,13 +131,13 @@ function AddDetails(props) {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="6">
-              <Form.Label>Superviser Number</Form.Label>
+              <Form.Label>Superviser Name</Form.Label>
               <Form.Control
                 id="snumber"
                 onChange={(e) => handle(e)}
                 // value={data.snumber}
                 type="text"
-                placeholder="Superviser Number"
+                placeholder="Superviser Name"
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -200,7 +203,7 @@ function AddDetails(props) {
               </Form.Control>
             </Form.Group>
 
-            {/* <Form.Group as={Col} md="3">
+            <Form.Group as={Col} md="3">
               <Form.Label>Token</Form.Label>
               <Form.Control
                 id="token"
@@ -212,6 +215,23 @@ function AddDetails(props) {
               />
               <Form.Control.Feedback type="invalid">
                 Please provide Token.
+              </Form.Control.Feedback>
+            </Form.Group>
+            
+
+
+            {/* <Form.Group as={Col} md="3">
+              <Form.Label>Superviser name</Form.Label>
+              <Form.Control
+                id="superviser_name"
+                onChange={(e) => handle(e)}
+                // value={data.cat}
+                type="text"
+                placeholder="Mr.Sandeep"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide Superviser name.
               </Form.Control.Feedback>
             </Form.Group> */}
 

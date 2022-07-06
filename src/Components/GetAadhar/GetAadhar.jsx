@@ -1,14 +1,21 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect , useContext } from "react";
 import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
 import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
 import AddDetails from "../AddDetails/AddDetails";
 import Clicktostartphotodetail from "../AddDetails/Clicktostartphotodetail"
 // import NewEntry from "../AddDetails/NewEntry";
+import { UserContext } from "../Context/WebcamContext";
+
+
 
 const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
 function GetAadhar() {
+
+  const { display_webcam, set_display_webcam } = useContext(UserContext);
+
+
     const [show_form, set_show_form]=useState(true);
   const [data, setData] = useState({
     aadhaar: "",
@@ -32,10 +39,15 @@ function GetAadhar() {
     form.append("aadhaar", data.aadhaar);
     const response = await axios.post(baseURL, form);
 
-    if (response.data === "unknown") {
+
+
+    // if (response.data === "unknown") {
+      if (true) {
         set_show_form(false)
         set_display_form(false)
         set_display_Add_new(true)
+       
+        set_display_webcam(false)
         // set_new_entry(true);
 
     } else {

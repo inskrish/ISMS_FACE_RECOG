@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect ,useContext} from "react";
 import Webcam from "react-webcam";
 import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
@@ -9,6 +9,8 @@ import FormExample from "../FormComponent/FormExample";
 import GetAadhar from "../GetAadhar/GetAadhar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { UserContext } from "../Context/WebcamContext";
+
 
 var i = 0;
 var data = [];
@@ -17,8 +19,12 @@ const baseURL = "http://11.0.0.221:8000/uploadImage/";
 export const WebcamCapture = (props) => {
   // console.log(props.click);
   // const { setShowOpenBtn } = props;
+  const { display_webcam, set_display_webcam } = useContext(UserContext);
+
   const [disbleCapture, setDisbleCapture] = useState(true);
   const [display_form, set_display_form] = useState(false);
+  // const [display_webcam, set_display_webcam] = useState(false);
+
   const [settling_props, set_settling_props] = useState({
     name: "",
     rank: "",
@@ -78,6 +84,7 @@ export const WebcamCapture = (props) => {
     if (response.data === "unknown") {
       alert("You are unknown try with aadhar number!!");
       set_display_form(false);
+
     } else {
       set_display_form(true);
       set_settling_props({
@@ -145,10 +152,18 @@ export const WebcamCapture = (props) => {
   };
 
   return (
+
+  
     <div style={styles.Container}>
       <Row style={styles.row}>
         <Col sm={4} style={styles.col}>
           {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
+
+
+
+          {/* { display_webcam &&  */}
+          { display_webcam &&
+
           <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
             <div style={{ padding: "10px" }}>
               <Webcam
@@ -204,6 +219,10 @@ export const WebcamCapture = (props) => {
             }} */}
             </div>
           </div>
+
+          }
+
+          
         </Col>
 
         <Col sm={8} style={styles.col}>
@@ -211,6 +230,7 @@ export const WebcamCapture = (props) => {
           {!display_form && <GetAadhar />}
 
           {/* </Dialog> */}
+          
         </Col>
       </Row>
     </div>

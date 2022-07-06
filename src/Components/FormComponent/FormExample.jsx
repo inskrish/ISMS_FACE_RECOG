@@ -73,19 +73,19 @@ function FormExample(props) {
               <Form.Control.Feedback>Nice!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <Form.Label>Number</Form.Label>
+              <Form.Label>Phone Number</Form.Label>
               <InputGroup hasValidation>
                 <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="Number"
+                  placeholder="Phone Number"
                   aria-describedby="inputGroupPrepend"
                   defaultValue={props.data.phnumber}
                   disabled={true}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please provide number.
+                  Please provide Phone Number.
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
@@ -152,7 +152,7 @@ function FormExample(props) {
               />
             </Form.Group>
 
-            {/* <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
           <Form.Label>Token</Form.Label>
           <Form.Control
             required
@@ -160,9 +160,9 @@ function FormExample(props) {
             placeholder="Token"
             // onChange={(e) => handle(e)}
             defaultValue={props.data.token}
-            disabled={false}
+            disabled={true}
           />
-        </Form.Group> */}
+        </Form.Group>
           </Row>
 
           <Container gap={2} className="col-md-5 mx-auto my-3">
