@@ -1,16 +1,19 @@
-import { useRef, useState, useEffect ,useContext} from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import Webcam from "react-webcam";
 import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
 import GetAadhar from "../GetAadhar/GetAadhar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Spinner, Container } from "react-bootstrap";
 import { UserContext } from "../Context/WebcamContext";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import SuccessAlert from "../Alert/SuccessAlert"
 
 var i = 0;
 var data = [];
@@ -19,10 +22,22 @@ const baseURL = "http://11.0.0.221:8000/uploadImage/";
 export const WebcamCapture = (props) => {
   // console.log(props.click);
   // const { setShowOpenBtn } = props;
-  const { display_webcam, set_display_webcam } = useContext(UserContext);
+  const {
+    display_webcam,
+    set_display_webcam,
+    sm_value,
+    set_sm_value,
+    show_spinner,
+    set_show_spinner,
+    show_Success_alert,
+    set_show_Success_alert,
+    show_Warning_alert,
+    set_show_Warning_alert
+  } = useContext(UserContext);
 
   const [disbleCapture, setDisbleCapture] = useState(true);
   const [display_form, set_display_form] = useState(false);
+  const [disable_btn, set_btn] = useState(true);
   // const [display_webcam, set_display_webcam] = useState(false);
 
   const [settling_props, set_settling_props] = useState({
@@ -34,6 +49,7 @@ export const WebcamCapture = (props) => {
     gender: "",
     blacklist: "",
     snumber: "",
+    image: "",
   });
 
   const [screenShots, setScreenShots] = useState([]);
@@ -57,6 +73,8 @@ export const WebcamCapture = (props) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   const capture = async () => {
+    set_show_spinner(true);
+    set_btn(false);
     // alert(isMobile);
     data = [];
     setScreenShots([]);
@@ -82,11 +100,14 @@ export const WebcamCapture = (props) => {
     console.log(response.data);
 
     if (response.data === "unknown") {
-      alert("You are unknown try with aadhar number!!");
+      // alert("You are unknown try with aadhar number!!");
       set_display_form(false);
+      set_show_spinner(false);
+      set_btn(true);
+      set_show_Warning_alert(true)
 
     } else {
-      set_display_form(true);
+      set_show_Success_alert(true)
       set_settling_props({
         ...settling_props,
         name: response.data.Name,
@@ -97,7 +118,12 @@ export const WebcamCapture = (props) => {
         gender: response.data.gender,
         blacklist: response.data.B,
         snumber: response.data.snumber,
+        token: response.data.token,
+        image: response.data.image,
       });
+      set_display_form(true);
+      set_btn(true);
+      set_show_spinner(false);
     }
   };
 
@@ -152,90 +178,120 @@ export const WebcamCapture = (props) => {
   };
 
   return (
-
-  
     <div style={styles.Container}>
       <Row style={styles.row}>
-        <Col sm={4} style={styles.col}>
-          {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
+        {display_webcam && (
+          <Col sm={4} style={styles.col}>
+            {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
+
+            {/* { display_webcam &&  */}
+
+            <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
+           
+            
+            {show_Success_alert && <SuccessAlert/>}
+               { show_Warning_alert &&  <SuccessAlert/>}
+
+              <div style={{ padding: "10px" }}>
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  minScreenshotHeight={200}
+                  screenshotQuality={1}
+                  minScreenshotWidth={100}
+                  forceScreenshotSourceSize
+                  onUserMediaError={showOpenbtn}
+                  onUserMedia={() => {
+                    setDisbleCapture(false);
+                  }}
+                  // onClick={() => {
+                  //   alert(1);
+                  // }}
+                  height={"100%"}
+                  width={"100%"}
+                  screenshotFormat="image/jpeg"
+                  videoConstraints={{
+                    height: 1080,
+                    width: 1920,
+                    facingMode: "environment",
+                  }}
+                />
+              </div>
+
+              <div style={{ marginTop: "15px" }}>
+                {disable_btn && (
+                  <Container
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button
+                      variant="outline-primary"
+                      color="primary"
+                      onClick={capture}
+                      disabled={disbleCapture}
+                    >
+                      Capture
+                    </Button>
+                  </Container>
+                )}
+                {show_spinner && (
+                  <Container
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button variant="primary" disabled>
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      &nbsp;&nbsp; Loading...
+                    </Button>
+                  </Container>
+                )}
+              </div>
+              
 
 
+              <div style={{ margin: "20px" }}>
+                {screenShots.map((item, index) => {
+                  return (
+                    <span style={{ marginRight: "10px" }} key={index}>
+                      <img
+                        src={item}
+                        alt={index}
+                        style={{ width: "100px", height: "100px" }}
+                      ></img>
+                    </span>
+                  );
+                })}
 
-          {/* { display_webcam &&  */}
-          { display_webcam &&
-
-          <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
-            <div style={{ padding: "10px" }}>
-              <Webcam
-                audio={false}
-                ref={webcamRef}
-                minScreenshotHeight={200}
-                screenshotQuality={1}
-                minScreenshotWidth={100}
-                forceScreenshotSourceSize
-                onUserMediaError={showOpenbtn}
-                onUserMedia={() => {
-                  setDisbleCapture(false);
-                }}
-                // onClick={() => {
-                //   alert(1);
-                // }}
-                height={"100%"}
-                width={"100%"}
-                screenshotFormat="image/jpeg"
-                videoConstraints={{
-                  height: 1080,
-                  width: 1920,
-                  facingMode: "environment",
-                }}
-              />
-            </div>
-
-            <div style={{ marginTop: "15px" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={capture}
-                disabled={disbleCapture}
-              >
-                Capture
-              </Button>
-            </div>
-
-            <div style={{ margin: "20px" }}>
-              {screenShots.map((item, index) => {
-                return (
-                  <span style={{ marginRight: "10px" }} key={index}>
-                    <img
-                      src={item}
-                      alt={index}
-                      style={{ width: "100px", height: "100px" }}
-                    ></img>
-                  </span>
-                );
-              })}
-              {/* {() => {
+                
+                {/* {() => {
             setScreenShots([])
             }} */}
+              </div>
             </div>
-          </div>
+          </Col>
+        )}
 
-          }
-
-          
-        </Col>
-
-        <Col sm={8} style={styles.col}>
-          {display_form && <FormExample data={settling_props} />}
+        <Col sm={sm_value} style={styles.col}>
           {!display_form && <GetAadhar />}
+          {display_form && <FormExample data={settling_props} />}
 
           {/* </Dialog> */}
-          
         </Col>
       </Row>
     </div>
   );
 };
-
 
 // export default WebcamCapture

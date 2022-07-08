@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import Webcam from "react-webcam";
 import { isMobile } from "react-device-detect";
 import Resizer from "react-image-file-resizer";
@@ -9,6 +9,8 @@ import FormExample from "../FormComponent/FormExample";
 import GetAadhar from "../GetAadhar/GetAadhar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { UserContext } from "../Context/WebcamContext";
+
 import AddDetails from "./AddDetails";
 
 var i = 0;
@@ -30,6 +32,10 @@ export const AddPhotoDetail = (props) => {
     blacklist: "",
     snumber: "",
   });
+
+  const { show_add_details_btn, set_show_add_details_btn } = useContext(
+    UserContext
+  );
 
   const [screenShots, setScreenShots] = useState([]);
   const webcamRef = useRef(null);
@@ -64,7 +70,6 @@ export const AddPhotoDetail = (props) => {
       const newFile = getFilefromBlob(imageSrc, `image.jpeg`);
       const newBlob = await resizeFile(newFile);
       setScreenShots((prevState) => [...prevState, newBlob]);
-
     }
 
     const form = new FormData();
@@ -76,8 +81,7 @@ export const AddPhotoDetail = (props) => {
 
     // const response = await axios.post(baseURL, form);
     // console.log(response.data);
-
-    
+    set_show_add_details_btn(true);
   };
 
   const showOpenbtn = () => {
@@ -135,7 +139,11 @@ export const AddPhotoDetail = (props) => {
       <Row style={styles.row}>
         <Col sm={4} style={styles.col}>
           {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
-          <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
+          <div
+            sm={
+              12
+            } /*style={{ justifyContent: "center", textAlign: "center" }}*/
+          >
             <div style={{ padding: "10px" }}>
               <Webcam
                 audio={false}

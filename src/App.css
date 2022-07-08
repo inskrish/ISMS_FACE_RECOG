@@ -54,16 +54,6 @@
   justify-content: center;
 }
 
-.container2 Button{
-  background-color: blue;
-  margin-left: 0.5rem;
-  color: white;
-}
-
-.container2 Button:hover{
-  background-color: darkblue;
-  color: white;
-}
 .container1 h4{
   width: 100%;
   font-size: 3.5rem;

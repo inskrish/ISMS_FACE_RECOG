@@ -1,4 +1,12 @@
-import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
+import {
+  Form,
+  Col,
+  Button,
+  Row,
+  InputGroup,
+  Container,
+  Image,
+} from "react-bootstrap";
 import { useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
@@ -9,6 +17,18 @@ function FormExample(props) {
   const [validated, setValidated] = useState(false);
   const [showcurr, setshowcurr] = useState(true);
   const [change, setChange] = useState(false);
+
+
+  const [data1, setData] = useState({
+    token: "",
+  });
+
+  function handle(e) {
+    const newData = { ...data1 };
+    newData[e.target.id] = e.target.value;
+    setData(newData);
+  }
+
 
   let value1 = "";
 
@@ -26,11 +46,18 @@ function FormExample(props) {
     form.append("category", props.data.cat);
     form.append("gender", props.data.gender);
     form.append("snumber", props.data.snumber);
-    form.append("token", props.data.token);
-    const response = await axios.post(baseURL, form);
-    alert(response.data);
+    form.append("token", data1.token);
+
+    setshowcurr(false);
     setChange(true);
-    setshowcurr(false)
+
+    console.log(data1.token)
+    const response = await axios.post(baseURL, form);
+
+    alert(response.data);
+        window.location.reload(true);
+
+    // decodeBase64()
     // e.target.reset();
     // if(response.data)
   }
@@ -46,10 +73,26 @@ function FormExample(props) {
     setValidated(true);
   };
   console.log(props);
+  console.log(props.data.image)
+  // let encodedBase64 = props.data.image;
+  // let buff = new Buffer(encodedBase64, 'base64');
+  // let base64ToStringNew = buff.toString('ascii');
+  
+
   return (
     <>
       {showcurr && (
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Container style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }} >
+          <Image
+            src={`data:image/png;base64,${props.data.image}`}
+            style={{ width: "250px", height: "250px" }}
+          ></Image>
+          </Container>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>Name</Form.Label>
@@ -153,16 +196,17 @@ function FormExample(props) {
             </Form.Group>
 
             <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label>Token</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Token"
-            // onChange={(e) => handle(e)}
-            defaultValue={props.data.token}
-            disabled={true}
-          />
-        </Form.Group>
+              <Form.Label>Token</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Token"
+                id="token"
+                onChange={(e) => handle(e)}
+                // defaultValue={props.data.token}
+                disabled={false}
+              />
+            </Form.Group>
           </Row>
 
           <Container gap={2} className="col-md-5 mx-auto my-3">
@@ -182,9 +226,11 @@ function FormExample(props) {
             >
               OUT
             </Button>
+
           </Container>
         </Form>
       )}
+
       {change && <GetAadhar />}
     </>
   );

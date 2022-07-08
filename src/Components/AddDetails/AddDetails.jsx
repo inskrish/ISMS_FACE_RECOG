@@ -1,24 +1,41 @@
 import { Form, Col, Button, Row, InputGroup, Container } from "react-bootstrap";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
 import FormExample from "../FormComponent/FormExample";
 // import WebcamCapture from "../WebCamera/WebcamCapture"
-import Clicktostart from "../WebCamera/Clicktostart"
+import Clicktostart from "../WebCamera/Clicktostart";
 import Webcam from "react-webcam";
 import Resizer from "react-image-file-resizer";
-import Clicktostartphotodetail from "./Clicktostartphotodetail"
+import Clicktostartphotodetail from "./Clicktostartphotodetail";
+import { Spinner } from "react-bootstrap";
+import { UserContext } from "../Context/WebcamContext";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import { Alert } from "react-bootstrap";
 
 const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
-
-
 function AddDetails(props) {
   // alert(props.data[0]);
-
+  const {
+    display_webcam,
+    set_display_webcam,
+    sm_value,
+    set_sm_value,
+    show_spinner,
+    set_show_spinner,
+    show_add_details_btn,
+    set_show_add_details_btn,
+  } = useContext(UserContext);
+  const [disable_btn, set_btn] = useState(true);
+  const [disbleCapture, setDisbleCapture] = useState(true);
   const [validated, setValidated] = useState(false);
   const [closeCurr, set_closeCurr] = useState(false);
   const [showNext, set_showNext] = useState(false);
 
+  const [showAdddetailsSuccess, set_showAdddetailsSuccess] = useState(false);
+  const [showAdddetailsFail, set_showAdddetailsFail] = useState(false);
+  
   const [data, setData] = useState({
     name: "",
     rank: "",
@@ -42,10 +59,14 @@ function AddDetails(props) {
     setValidated(true);
   };
   const form = new FormData();
-
+  
   async function submit(e) {
+    set_showAdddetailsFail(false);
+    set_show_spinner(true);
+    set_btn(false);
+
     e.preventDefault();
-    
+
     form.append("name", data.name);
     form.append("rank", data.rank);
     form.append("number", data.phnumber);
@@ -56,30 +77,39 @@ function AddDetails(props) {
     form.append("snumber", data.snumber);
     form.append("token", data.token);
     // form.append("superviser_name", data.superviser_name);
-    form.append("photo0", props.data[0])
-    form.append("photo1", props.data[1])
-    form.append("photo2", props.data[2])
-    form.append("photo3", props.data[3])
-    form.append("photo4", props.data[4])
+
+    form.append("photo0", props.data[0]);
+    form.append("photo1", props.data[1]);
+    form.append("photo2", props.data[2]);
+    form.append("photo3", props.data[3]);
+    form.append("photo4", props.data[4]);
     // form.append("token", data.token);
 
-
     const response = await axios.post(baseURL2, form);
-
     if (response.data === "success") {
       set_closeCurr(false);
       set_showNext(false);
-      alert("Data added successfully..!!");
-      window.location.reload(false);
+      set_btn(true);
+      set_show_spinner(false);
+      set_showAdddetailsSuccess(true);
+      setTimeout(() => {
+        window.location.reload(false);
+      }, 3000);
     }
-
+    else if (response.data === "User Details already exist in the database.") {
+      set_btn(true);
+      set_show_spinner(false);
+      set_showAdddetailsFail(true);
+    }
   }
-  
+
   function handle(e) {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
   }
+
+  function set_add_details() {}
 
   return (
     <>
@@ -161,19 +191,18 @@ function AddDetails(props) {
             <Form.Group as={Col} md="3">
               <Form.Label>Category</Form.Label>
               <Form.Control
+                aria-label="Default select example"
                 id="cat"
+                as="select"
                 onChange={(e) => handle(e)}
                 // value={data.cat}
-                type="text"
-                placeholder="Cat"
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide category.
-              </Form.Control.Feedback>
+              >
+                <option value="Service">Service</option>
+                <option value="Civilian">Civilian</option>
+                <option value="Supervisor">Supervisor</option>
+              </Form.Control>
             </Form.Group>
           </Row>
-
           <Row className="mb-6">
             <Form.Group as={Col} md="3">
               <Form.Label>Gender</Form.Label>
@@ -203,7 +232,7 @@ function AddDetails(props) {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group as={Col} md="3">
+            {/* <Form.Group as={Col} md="3">
               <Form.Label>Token</Form.Label>
               <Form.Control
                 id="token"
@@ -217,8 +246,7 @@ function AddDetails(props) {
                 Please provide Token.
               </Form.Control.Feedback>
             </Form.Group>
-            
-
+             */}
 
             {/* <Form.Group as={Col} md="3">
               <Form.Label>Superviser name</Form.Label>
@@ -242,12 +270,63 @@ function AddDetails(props) {
               Capture Images
             </Button>
           </Container> */}
-
-          <Container gap={2} className="col-md-5 mx-auto my-3">
-            <Button type="submit" variant="outline-primary col-md-3 mx-3">
+          {/* <Container gap={2} className="col-md-5 mx-auto my-3">
+            <Button
+              type="submit"
+              variant="outline-primary col-md-3 mx-3"
+              disabled={!show_add_details_btn}
+            >
               Add Details
             </Button>
-          </Container>
+          </Container> */}
+          {disable_btn && (
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "2rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <Button
+                variant="outline-primary"
+                color="primary"
+                type="submit"
+                disabled={!show_add_details_btn}
+              >
+                Add Details
+              </Button>
+            </Container>
+          )}
+
+          {show_spinner && (
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "2rem",
+              }}
+            >
+              <Button variant="primary" disabled>
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                &nbsp;&nbsp; Loading...
+              </Button>
+            </Container>
+          )}
+          {showAdddetailsSuccess && (
+            <Alert variant="success">Person Added Successfully !</Alert>
+          )}
+          {showAdddetailsFail && (
+            <Alert variant="danger">User Details already exist..!</Alert>
+          )}
         </Form>
       )}
       {/* {showNext && <FormExample data={data} />} */}

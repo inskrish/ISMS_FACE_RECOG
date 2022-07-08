@@ -13,7 +13,7 @@ const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
 function GetAadhar() {
 
-  const { display_webcam, set_display_webcam } = useContext(UserContext);
+  const { display_webcam, set_display_webcam ,sm_value ,set_sm_value} = useContext(UserContext);
 
 
     const [show_form, set_show_form]=useState(true);
@@ -29,6 +29,7 @@ function GetAadhar() {
     gender: "",
     blacklist: "",
     snumber: "",
+    image: "",
   });
   const [display_form, set_display_form] = useState(false);
   const [display_Add_new, set_display_Add_new] = useState(false);
@@ -41,12 +42,12 @@ function GetAadhar() {
 
 
 
-    // if (response.data === "unknown") {
-      if (true) {
+    if (response.data === "unknown") {
         set_show_form(false)
         set_display_form(false)
         set_display_Add_new(true)
-       
+        set_sm_value(12)
+
         set_display_webcam(false)
         // set_new_entry(true);
 
@@ -63,6 +64,8 @@ function GetAadhar() {
         gender: response.data.gender,
         blacklist: response.data.B,
         snumber: response.data.snumber,
+        token: response.data.token,
+        image: response.data.image,
       });
     }
   }
@@ -75,7 +78,7 @@ function GetAadhar() {
   return (
     <>
     {show_form &&
-
+      
         <Form onSubmit={(e) => submit(e)}>
 
         <Row className="mb-3">
@@ -87,7 +90,7 @@ function GetAadhar() {
             value={data.aadhaar}
             required
             type="number"
-            placeholder="814234567890"
+            placeholder=""
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>

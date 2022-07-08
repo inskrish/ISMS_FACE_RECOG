@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "@material-ui/core/Button";
+import { Button } from "react-bootstrap";
 import { isMobile } from "react-device-detect";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -65,9 +65,9 @@ function App() {
         <Button type="simpleQuery" onClick={(e) => reload_page(e)} style={{"margin-left": "30px"}}>
           HOME
         </Button>
-        <Button type="simpleQuery" onClick={setHandler}>
+        {/* <Button type="simpleQuery" onClick={setHandler}>
           Add New User
-        </Button>
+        </Button> */}
         
         {/* <Button type="simpleQuery" onClick={(e) => add_person(e)}>
           Add Person

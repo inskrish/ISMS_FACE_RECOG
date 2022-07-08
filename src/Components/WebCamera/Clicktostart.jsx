@@ -22,7 +22,6 @@ function Clicktostart() {
   };
 
   return (
-    <>
     <div
       // style={{
       //   justifyContent: "center",
@@ -63,7 +62,6 @@ function Clicktostart() {
       {isCaptureEnable && <WebcamCapture />}
 
     </div>
-    </>
   );
   
 }
