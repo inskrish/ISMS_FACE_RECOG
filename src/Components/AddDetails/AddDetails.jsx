@@ -13,9 +13,27 @@ import { UserContext } from "../Context/WebcamContext";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { Alert } from "react-bootstrap";
+import "./style.css"
 
 const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
-function AddDetails(props) {
+ function AddDetails(props) {
+  const [cat,setCat]=useState([]);
+  const [sup,setSup]=useState([]);
+  useEffect(() => {
+     axios.get('http://11.0.0.221:8000/getCat/').then((res)=>{
+      setCat(res.data);
+      console.log("hit");
+     })
+
+     axios.get('http://11.0.0.221:8000/getSups/').then((res) => {
+      setSup(res.data);
+      console.log('supervisor list called');
+     })
+    
+}, [])
+  
+    
+
   // alert(props.data[0]);
   const {
     display_webcam,
@@ -117,7 +135,7 @@ function AddDetails(props) {
         <Form noValidate validated={validated} onSubmit={(e) => submit(e)}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4">
-              <Form.Label>Name</Form.Label>
+              <Form.Label className="form">Name</Form.Label>
               <Form.Control
                 id="name"
                 onChange={(e) => handle(e)}
@@ -129,7 +147,7 @@ function AddDetails(props) {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4">
-              <Form.Label>Rank</Form.Label>
+              <Form.Label className="form">Rank</Form.Label>
               <Form.Control
                 id="rank"
                 onChange={(e) => handle(e)}
@@ -141,7 +159,7 @@ function AddDetails(props) {
               <Form.Control.Feedback>Nice!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4">
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label className="form">Phone Number</Form.Label>
               <InputGroup hasValidation>
                 <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                 <Form.Control
@@ -161,7 +179,7 @@ function AddDetails(props) {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="6">
-              <Form.Label>Superviser Name</Form.Label>
+              <Form.Label className="form">Superviser Name</Form.Label>
               <Form.Control
                 id="snumber"
                 onChange={(e) => handle(e)}
@@ -175,7 +193,7 @@ function AddDetails(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3">
-              <Form.Label>AadharCard number</Form.Label>
+              <Form.Label className="form">AadharCard number</Form.Label>
               <Form.Control
                 id="aadhar"
                 onChange={(e) => handle(e)}
@@ -189,7 +207,7 @@ function AddDetails(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3">
-              <Form.Label>Category</Form.Label>
+              <Form.Label className="form">Category</Form.Label>
               <Form.Control
                 aria-label="Default select example"
                 id="cat"
@@ -197,15 +215,18 @@ function AddDetails(props) {
                 onChange={(e) => handle(e)}
                 // value={data.cat}
               >
-                <option value="Service">Service</option>
-                <option value="Civilian">Civilian</option>
-                <option value="Supervisor">Supervisor</option>
+              {cat.map((option,index)=>(
+                <option  key={index} value={option.value}>{cat[index]}</option>
+               
+
+              ))}
+                
               </Form.Control>
             </Form.Group>
           </Row>
           <Row className="mb-6">
             <Form.Group as={Col} md="3">
-              <Form.Label>Gender</Form.Label>
+              <Form.Label className="form">Gender</Form.Label>
               <Form.Control
                 aria-label="Default select example"
                 as="select"
@@ -219,7 +240,7 @@ function AddDetails(props) {
             </Form.Group>
 
             <Form.Group as={Col} md="3">
-              <Form.Label>BlackList</Form.Label>
+              <Form.Label className="form">BlackList</Form.Label>
               <Form.Control
                 aria-label="Default select example"
                 as="select"

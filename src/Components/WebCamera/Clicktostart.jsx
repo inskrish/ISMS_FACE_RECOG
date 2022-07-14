@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from "../Context/WebcamContext";
 
 
-function Clicktostart() {
+function Clicktostart({state}) {
   // const [isCaptureEnable, setCaptureEnable] = useState(true);
   // const [showOpenBtn, setShowOpenBtn] = useState(true);
   const { display_webcam, set_display_webcam } = useContext(UserContext);
@@ -59,7 +59,8 @@ function Clicktostart() {
       </Button> */}
       {/* {isCaptureEnable && <WebcamCapture setShowOpenBtn={showOpenBtnFn} />} */}
       {console.log(display_webcam)}
-      {isCaptureEnable && <WebcamCapture />}
+      
+      {isCaptureEnable && <WebcamCapture state={state}/>}
 
     </div>
   );

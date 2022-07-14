@@ -16,7 +16,9 @@ export const UserContext = createContext({
 
 export const UserContextProvider = ({ children }) => {
   const [display_webcam, set_display_webcam] = useState(true);
-  const [sm_value, set_sm_value] = useState(8);
+  const [sm_value,set_sm_value] = useState(8);
+  // const [] = useState(5);
+
   //state for spinner
   const [show_spinner, set_show_spinner] = useState(false);
   const [show_Success_alert, set_show_Success_alert] = useState(false);

@@ -7,10 +7,12 @@ import {
   Container,
   Image,
 } from "react-bootstrap";
+import "./style.css"
 import { useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
 import GetAadhar from "../GetAadhar/GetAadhar";
+import ImageComponent from "./ImageComponent";
 const baseURL = "http://11.0.0.221:8000/makeEntry/";
 
 function FormExample(props) {
@@ -53,8 +55,8 @@ function FormExample(props) {
 
     console.log(data1.token)
     const response = await axios.post(baseURL, form);
-
-    alert(response.data);
+    console.log(response.data)
+     alert(response.data);
         window.location.reload(true);
 
     // decodeBase64()
@@ -82,136 +84,127 @@ function FormExample(props) {
   return (
     <>
       {showcurr && (
+        
+        
+        
+        <>
+       
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Container style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }} >
-          <Image
-            src={`data:image/png;base64,${props.data.image}`}
-            style={{ width: "250px", height: "250px" }}
-          ></Image>
-          </Container>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Name"
-                defaultValue={props.data.name}
-                disabled={true}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Rank</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Rank"
-                defaultValue={props.data.rank}
-                disabled={true}
-              />
-              <Form.Control.Feedback>Nice!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <Form.Label>Phone Number</Form.Label>
-              <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+          <diV style={{padding:"20px",minWidth:"200px"}}>
+
+
+            <Row className="mb-4">
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label className="form">Name</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Name"
+                  defaultValue={props.data.name}
+                  disabled={true} />
+              </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustom02">
+                <Form.Label className="form">Rank</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Rank"
+                  defaultValue={props.data.rank}
+                  disabled={true} />
+                <Form.Control.Feedback>Nice!</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                <Form.Label className="form">Phone Number</Form.Label>
+                <InputGroup hasValidation>
+                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    placeholder="Phone Number"
+                    aria-describedby="inputGroupPrepend"
+                    defaultValue={props.data.phnumber}
+                    disabled={true}
+                    required />
+                  <Form.Control.Feedback type="invalid">
+                    Please provide Phone Number.
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+            </Row>
+            <Row className="mb-4">
+              <Form.Group as={Col} md="4" controlId="validationCustom03">
+                <Form.Label className="form">Service Number</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Phone Number"
-                  aria-describedby="inputGroupPrepend"
-                  defaultValue={props.data.phnumber}
+                  placeholder="SNumber"
+                  defaultValue={props.data.snumber}
                   disabled={true}
-                  required
-                />
+                  required />
                 <Form.Control.Feedback type="invalid">
-                  Please provide Phone Number.
+                  Please provide a SNumber.
                 </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
-              <Form.Label>Service Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="SNumber"
-                defaultValue={props.data.snumber}
-                disabled={true}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a SNumber.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom04">
-              <Form.Label>AadharCard number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="AadharCard number"
-                defaultValue={props.data.aadhar}
-                disabled={true}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a AadharCard number.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom05">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Cat"
-                defaultValue={props.data.cat}
-                disabled={true}
-                required
-              />
-            </Form.Group>
-          </Row>
+              </Form.Group>
+              <Form.Group as={Col} md="5" controlId="validationCustom04">
+                <Form.Label className="form">Aadharnumber</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="AadharCard number"
+                  defaultValue={props.data.aadhar}
+                  disabled={true}
+                  required />
+                <Form.Control.Feedback type="invalid" >
+                  Please provide a AadharCard number.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="3" controlId="validationCustom05">
+                <Form.Label className="form">Category</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Cat"
+                  defaultValue={props.data.cat}
+                  disabled={true}
+                  required />
+              </Form.Group>
+            </Row>
 
-          <Row className="mb-6">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Gender</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Gender"
-                defaultValue={props.data.gender}
-                disabled={true}
-              />
-            </Form.Group>
+            <Row className="mb-6">
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label className="form">Gender</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Gender"
+                  defaultValue={props.data.gender}
+                  disabled={true} />
+              </Form.Group>
 
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>BlackList</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Blacklist"
-                defaultValue={props.data.blacklist}
-                disabled={true}
-              />
-            </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label className="form">BlackList</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Blacklist"
+                  defaultValue={props.data.blacklist}
+                  disabled={true} />
+              </Form.Group>
 
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Token</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Token"
-                id="token"
-                onChange={(e) => handle(e)}
-                // defaultValue={props.data.token}
-                disabled={false}
-              />
-            </Form.Group>
-          </Row>
-
-          <Container gap={2} className="col-md-5 mx-auto my-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label className="form">Token</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Token"
+                  id="token"
+                  onChange={(e) => handle(e)}
+                  // defaultValue={props.data.token}
+                  disabled={false} />
+              </Form.Group>
+            </Row>
+          </diV>
+          
+         
+          <Container gap={2} className="col-md-8 mx-auto my-4">
             <Button
-              variant="outline-success col-md-3 mx-3"
+              variant="success col-md-3 mx-3"
               onClick={(e) => submit(e)}
               id="In"
               value="In"
@@ -219,7 +212,7 @@ function FormExample(props) {
               IN
             </Button>
             <Button
-              variant="outline-danger col-md-3 mx-3"
+              variant="danger col-md-3 mx-3"
               onClick={(e) => submit(e)}
               id="Out"
               value="Out"
@@ -229,8 +222,11 @@ function FormExample(props) {
 
           </Container>
         </Form>
+      
+          </>
+          
       )}
-
+      
       {change && <GetAadhar />}
     </>
   );

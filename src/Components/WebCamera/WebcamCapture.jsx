@@ -14,7 +14,8 @@ import { UserContext } from "../Context/WebcamContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import SuccessAlert from "../Alert/SuccessAlert"
-
+import ImageComponent from "../FormComponent/ImageComponent";
+import "./web.css";
 var i = 0;
 var data = [];
 const baseURL = "http://11.0.0.221:8000/uploadImage/";
@@ -51,7 +52,12 @@ export const WebcamCapture = (props) => {
     snumber: "",
     image: "",
   });
-
+  const styles1 = {
+    padding:"10px",
+    
+    display:"flex" , 
+    
+};
   const [screenShots, setScreenShots] = useState([]);
   const webcamRef = useRef(null);
   const resizeFile = (file) =>
@@ -126,7 +132,7 @@ export const WebcamCapture = (props) => {
       set_show_spinner(false);
     }
   };
-
+console.log("here"+props.state);
   const showOpenbtn = () => {
     // setShowOpenBtn();
   };
@@ -163,134 +169,155 @@ export const WebcamCapture = (props) => {
 
   const styles = {
     Container: {
-      paddingLeft: "2rem",
+      paddingLeft: "1rem",
       paddingRight: "2rem",
-      marginTop: "3rem",
+      paddingTop:"3%",
+      // backgroundColor: "rgb(53, 72, 104)",
     },
     row: {
       // marginLeft: "2rem",
       // marginRight: "2rem"
     },
     col: {
-      // paddingLeft: "2rem",
-      // paddingRight: "2rem"
+      // borderLeft: "solid 1px",
     },
+    verticalLine: {
+      borderRight: "solid gray 1px",
+      borderLeft: "solid gray 1px"
+    }
   };
-
   return (
-    <div style={styles.Container}>
-      <Row style={styles.row}>
-        {display_webcam && (
-          <Col sm={4} style={styles.col}>
-            {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
-
-            {/* { display_webcam &&  */}
-
-            <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
-           
+    <>
+      <div style={styles.Container }>
+        <Row style={styles.row}>
+          {display_webcam && (
             
-            {show_Success_alert && <SuccessAlert/>}
-               { show_Warning_alert &&  <SuccessAlert/>}
+            <Col sm={4} style={styles.col}>
+              {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
 
-              <div style={{ padding: "10px" }}>
-                <Webcam
-                  audio={false}
-                  ref={webcamRef}
-                  minScreenshotHeight={200}
-                  screenshotQuality={1}
-                  minScreenshotWidth={100}
-                  forceScreenshotSourceSize
-                  onUserMediaError={showOpenbtn}
-                  onUserMedia={() => {
-                    setDisbleCapture(false);
-                  }}
-                  // onClick={() => {
-                  //   alert(1);
-                  // }}
-                  height={"100%"}
-                  width={"100%"}
-                  screenshotFormat="image/jpeg"
-                  videoConstraints={{
-                    height: 1080,
-                    width: 1920,
-                    facingMode: "environment",
-                  }}
-                />
-              </div>
+              {/* { display_webcam &&  */}
 
-              <div style={{ marginTop: "15px" }}>
-                {disable_btn && (
-                  <Container
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Button
-                      variant="outline-primary"
-                      color="primary"
-                      onClick={capture}
-                      disabled={disbleCapture}
-                    >
-                      Capture
-                    </Button>
-                  </Container>
-                )}
-                {show_spinner && (
-                  <Container
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Button variant="primary" disabled>
-                      <Spinner
-                        as="span"
-                        animation="grow"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                      &nbsp;&nbsp; Loading...
-                    </Button>
-                  </Container>
-                )}
-              </div>
+              <div /*style={{ justifyContent: "center", textAlign: "center" }}*/>
+            
               
+              {show_Success_alert && <SuccessAlert/>}
+                { show_Warning_alert &&  <SuccessAlert/>}
+             
+              <>
+                <div style={{ padding: "1rem", marginLeft: "0" }}>
+                  <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    minScreenshotHeight={200}
+                    screenshotQuality={1}
+                    minScreenshotWidth={100}
+                    forceScreenshotSourceSize
+                    onUserMediaError={showOpenbtn}
+                    onUserMedia={() => {
+                      setDisbleCapture(false);
+                    }}
+                    // onClick={() => {
+                    //   alert(1);
+                    // }}
+                    height={"90%"}
+                    width={"90%"}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={{
+                      height: 1080,
+                      width: 1920,
+                      facingMode: "environment",
+                    }}
+                  />
+                </div>
+              
+              
+                <div style={{ marginLeft:"-75px",marginTop: "15px" }}>
+                  {disable_btn && (
+                    <Container
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button
+                        variant="primary"
+                        color="primary"
+                        onClick={capture}
+                        disabled={disbleCapture}
+                      >
+                        Capture
+                      </Button>
+                    </Container>
+                  )}
+                  {show_spinner && (
+                    <Container
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button variant="primary" disabled>
+                        <Spinner
+                          as="span"
+                          animation="grow"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        &nbsp;&nbsp; Loading...
+                      </Button>
+                    </Container>
+                  )}
+                </div>
+                </>
+          
 
 
-              <div style={{ margin: "20px" }}>
-                {screenShots.map((item, index) => {
-                  return (
-                    <span style={{ marginRight: "10px" }} key={index}>
-                      <img
-                        src={item}
-                        alt={index}
-                        style={{ width: "100px", height: "100px" }}
-                      ></img>
-                    </span>
-                  );
-                })}
+                <div style={{ margin: "20px" }}>
+                  {screenShots.map((item, index) => {
+                    return (
+                      <span style={{ padding: "10px" }} key={index}>
+                        <img
+                          src={item}
+                          alt={index}
+                          style={{ width: "60px", height: "60px" }}
+                        ></img>
+                      </span>
+                    );
+                  })}
 
-                
-                {/* {() => {
-            setScreenShots([])
-            }} */}
+                  
+                  {/* {() => {
+              setScreenShots([])
+              }} */}
+                </div>
               </div>
+            </Col>
+            
+            
+          )}
+
+          {!display_form &&
+          <Col style={styles.col}>
+            {<GetAadhar />}
+            </Col>
+          }
+          {display_form && (
+            <div className="col-sm" style={styles1}>
+            {display_form &&<div style={styles.verticalLine}></div>}
+            {display_form && <FormExample data={settling_props} />}
+            {display_form &&<div style={styles.verticalLine}></div>}
+            {display_form && <ImageComponent data={settling_props} />}
+            {/* </Dialog> */}
             </div>
-          </Col>
-        )}
-
-        <Col sm={sm_value} style={styles.col}>
-          {!display_form && <GetAadhar />}
-          {display_form && <FormExample data={settling_props} />}
-
-          {/* </Dialog> */}
-        </Col>
-      </Row>
-    </div>
+          )
+          }
+          
+        </Row>
+      </div>
+    </>
   );
 };
 

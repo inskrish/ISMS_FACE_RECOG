@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+
 import { isMobile } from "react-device-detect";
 import "./App.css";
+import {Footer} from "./Components/Footer";
+import ToggleSwitch from "./Components/ToggleSwitch";
+import SideNavBar from "./Components/navbar/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Clicktostart from "./Components/WebCamera/Clicktostart";
 import Clicktostartphotodetail from "./Components/AddDetails/Clicktostartphotodetail"
@@ -18,6 +22,8 @@ function App() {
 
   const [showgetadhaar, set_showgetadhaar] = useState(true);
 
+  const[state, setState]=useState(true);
+  console.log(state)
 
   const styles = {
     Container: {
@@ -51,44 +57,29 @@ function App() {
   return (
     // <>
         <UserContextProvider>
+        
+          <div className="App">
 
-      <div className="container1">
-        <img
+          <SideNavBar/>    
+        <div className="tittle mb-0">
+        <img 
           className="logo"
           src={require("./mylogo.png")}
-          width="125px"
-          height="125px"
+          width="110px"
+          height="110px"
+          alt="INS Valsura"
         />
-        <h4 align="center">Integrated Security Management System</h4>
-      </div>
-      <div className="container2">
-        <Button type="simpleQuery" onClick={(e) => reload_page(e)} style={{"margin-left": "30px"}}>
-          HOME
-        </Button>
-        {/* <Button type="simpleQuery" onClick={setHandler}>
-          Add New User
-        </Button> */}
+        <span>AI Based Facial Recognition System</span>
+        </div>
         
-        {/* <Button type="simpleQuery" onClick={(e) => add_person(e)}>
-          Add Person
-        </Button> */}
-      </div>
-      {/* <div style={styles.Container}>
-    <Row style={styles.row}>
-    <Col sm={4} style={styles.col}> */}
-      
-    {showgetadhaar && <Clicktostart /> }
-
+    <div className="bodyContainer">
+    <ToggleSwitch label="Input Method" stateChanger={setState}  />
+      {showgetadhaar && <Clicktostart state={state} /> }
       {showAddUser && <Clicktostartphotodetail />}
-      {/* </Col> */}
-      {/* <Col sm={8} style={styles.col}> */}
-      {/* <FormExample/> */}
-      {/* </Col> */}
-      {/* </Row> */}
-      {/* </div> */}
+    </div>
+      <div className="FooterClass"><Footer /></div>
+      </div>
       </UserContextProvider>
-     // </> 
-    
   );
 }
 

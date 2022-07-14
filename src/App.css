@@ -37,13 +37,40 @@
   }
 } */
 
-.container1{
+/* .container1{
   width: 100%;
   display: flex;
   align-items: center;
   padding: 0%;
   margin: 1%;
+} */
+.tittle{
+  
+    box-sizing: border-box;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    
+    align-items: center;
+    
+    text-align: center;
+    margin-bottom: 1em;
+    background-color: rgb(144, 144, 144);
+    background-color: rgba(0,0,0, 0.2);
+   
+    color: rgb(35, 4, 70);
+    
+  
+  
 }
+
+.tittle span{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font: weight 200px;
+  font-size: 40px;
+}
+
+
 
 .container2{
   width: 100%;
@@ -54,7 +81,7 @@
   justify-content: center;
 }
 
-.container1 h4{
+.page-wrap h4{
   width: 100%;
   font-size: 3.5rem;
   font-weight: lighter;
@@ -62,3 +89,75 @@
   /* margin-right: 30px; */
 }
 
+html,
+body {
+  margin: 0;
+}
+
+#App {
+  font-family: sans-serif;
+  /* height: 100vh; */
+}
+
+#page-wrap {
+  text-align: center;
+  /* overflow: auto; */
+}
+
+.bm-item {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #d1d1d1;
+  transition: color 0.2s;
+}
+
+.bm-item:hover {
+  color: rgb(182, 182, 182);
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 32px;
+  height: 30px;
+  left: 32px;
+  top: 36px;
+}
+
+.bm-burger-bars {
+  background: #373a47;
+}
+
+.bm-cross-button {
+  height: 22px;
+  width: 22px;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+.bm-item-list {
+  color: #b8b7ad;
+}
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.bodyContainer {
+  height: 47.5rem;
+  background-color: rgb(53, 72, 104);
+  
+  
+}

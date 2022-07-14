@@ -18,6 +18,9 @@ var data = [];
 const baseURL = "http://11.0.0.221:8000/saveDetails/";
 
 export const AddPhotoDetail = (props) => {
+
+ 
+  
   // console.log(props.click);
   // const { setShowOpenBtn } = props;
   const [disbleCapture, setDisbleCapture] = useState(true);
@@ -137,7 +140,7 @@ export const AddPhotoDetail = (props) => {
   return (
     <div style={styles.Container}>
       <Row style={styles.row}>
-        <Col sm={4} style={styles.col}>
+        <Col style={styles.col}>
           {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
           <div
             sm={
