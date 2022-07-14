@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-bootstrap";
 import "./style.css"
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
 import GetAadhar from "../GetAadhar/GetAadhar";
@@ -23,15 +23,25 @@ function FormExample(props) {
 
   const [data1, setData] = useState({
     token: "",
+    supervisor:" "
   });
 
   function handle(e) {
     const newData = { ...data1 };
+    console.log(e.target.value,e.target.id)
     newData[e.target.id] = e.target.value;
     setData(newData);
   }
+const [sup,setSup]=useState([]);
+useEffect(() => {
+ 
 
-
+  axios.get('http://11.0.0.221:8000/getSups/').then((res) => {
+   setSup(res.data);
+   console.log('supervisor list called');
+  })
+ 
+}, [])
   let value1 = "";
 
   async function submit(e) {
@@ -48,6 +58,7 @@ function FormExample(props) {
     form.append("category", props.data.cat);
     form.append("gender", props.data.gender);
     form.append("snumber", props.data.snumber);
+    form.append("supervisor", data1.supervisor);
     form.append("token", data1.token);
 
     setshowcurr(false);
@@ -143,7 +154,7 @@ function FormExample(props) {
                   Please provide a SNumber.
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="5" controlId="validationCustom04">
+              <Form.Group as={Col} md="4" controlId="validationCustom04">
                 <Form.Label className="form">Aadharnumber</Form.Label>
                 <Form.Control
                   type="text"
@@ -186,7 +197,26 @@ function FormExample(props) {
                   defaultValue={props.data.blacklist}
                   disabled={true} />
               </Form.Group>
+              <Form.Group as={Col} md="4">
+              <Form.Label className="form">Superviser</Form.Label>
+              <Form.Control
+                aria-label="Default select example"
+                id="supervisor"
+                as="select"
+                onChange={(e) => handle(e)}
+                
+              >
+              {sup.map((option,index)=>(
+                <option  key={index} value={option.value}>{sup[index]}</option>
+               
 
+              ))}
+                
+              </Form.Control>
+              
+            </Form.Group>
+            </Row>
+            <Row className="mb-6">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label className="form">Token</Form.Label>
                 <Form.Control
@@ -218,6 +248,14 @@ function FormExample(props) {
               value="Out"
             >
               OUT
+            </Button>
+            <Button
+              variant="warning col-md-3 mx-3"
+              onClick={(e) => submit(e)}
+              id="abort"
+              value="Out"
+            >
+              Abort
             </Button>
 
           </Container>
