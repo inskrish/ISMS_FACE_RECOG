@@ -13,13 +13,15 @@ import Stack from "react-bootstrap/Stack";
 import axios from "axios";
 import GetAadhar from "../GetAadhar/GetAadhar";
 import ImageComponent from "./ImageComponent";
+import { Alert } from "react-bootstrap";
 const baseURL = "http://11.0.0.221:8000/makeEntry/";
 
-function FormExample(props) {
+function FormExample(props,setShowImage) {
   const [validated, setValidated] = useState(false);
   const [showcurr, setshowcurr] = useState(true);
   const [change, setChange] = useState(false);
-
+  const [showSuccess, set_Success] = useState(false);
+  const [showAdddetailsl, set_showAdddetails] = useState("");
 
   const [data1, setData] = useState({
     token: "",
@@ -61,14 +63,25 @@ useEffect(() => {
     form.append("supervisor", data1.supervisor);
     form.append("token", data1.token);
 
-    setshowcurr(false);
-    setChange(true);
+    
 
     console.log(data1.token)
     const response = await axios.post(baseURL, form);
+    // setshowcurr(false);
+    
+
     console.log(response.data)
-     alert(response.data);
-        window.location.reload(true);
+    set_showAdddetails(response.data);
+    
+    set_Success(true);
+    // setshowcurr(false);
+
+    // setChange(true);
+    // setShowImage(false);
+    setTimeout(()=>window.location.reload(true),
+    3000);
+    
+    //  window.location.reload(true);
 
     // decodeBase64()
     // e.target.reset();
@@ -166,7 +179,7 @@ useEffect(() => {
                   Please provide a AadharCard number.
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationCustom05">
+              <Form.Group as={Col} md="4" controlId="validationCustom05">
                 <Form.Label className="form">Category</Form.Label>
                 <Form.Control
                   type="text"
@@ -198,35 +211,38 @@ useEffect(() => {
                   disabled={true} />
               </Form.Group>
               <Form.Group as={Col} md="4">
-              <Form.Label className="form">Superviser</Form.Label>
-              <Form.Control
-                aria-label="Default select example"
-                id="supervisor"
-                as="select"
-                onChange={(e) => handle(e)}
-                
-              >
-              {sup.map((option,index)=>(
-                <option  key={index} value={option.value}>{sup[index]}</option>
-               
-
-              ))}
-                
-              </Form.Control>
-              
             </Form.Group>
             </Row>
-            <Row className="mb-6">
-              <Form.Group as={Col} md="4" controlId="validationCustom01">
-                <Form.Label className="form">Token</Form.Label>
+            <br />
+            <hr style={{color: 'gray'}}/>
+            <h5 className="form">Enter The following details:</h5>
+            <Row className="mb-4 justify-content-center">
+                <Form.Group controlId="validationCustom01">
+                <div className="col">
+                <Form.Label className="form">Supervisor</Form.Label>
                 <Form.Control
-                  required
-                  type="text"
-                  placeholder="Token"
-                  id="token"
-                  onChange={(e) => handle(e)}
-                  // defaultValue={props.data.token}
-                  disabled={false} />
+                  aria-label="Default select example"
+                  id="supervisor"
+                  as="select"
+                  onChange={(e) => handle(e)} 
+                >
+                  {sup.map((option,index)=>(
+                    <option key={index} value={option.value}>{sup[index]}</option>
+                  ))}
+                </Form.Control>
+                </div>
+                <br />
+                <div className="col">
+                  <Form.Label className="form">Token</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Token"
+                    id="token"
+                    onChange={(e) => handle(e)}
+                    // defaultValue={props.data.token}
+                    disabled={false} />
+                </div>
               </Form.Group>
             </Row>
           </diV>
@@ -253,19 +269,26 @@ useEffect(() => {
               variant="warning col-md-3 mx-3"
               onClick={(e) => submit(e)}
               id="abort"
-              value="Out"
+              value="Abort"
             >
               Abort
             </Button>
 
           </Container>
+
+          
+          
         </Form>
-      
+         
           </>
           
       )}
-      
-      {change && <GetAadhar />}
+      <div style={{display:'flex',position:'fixed',bottom:'20%',left:"60%"}}>
+          {showSuccess && (
+            <Alert variant="warning" style={{margin:'auto',width:"100%"}}>{showAdddetailsl}!</Alert>
+          )}
+          </div>
+      {/* {change && <GetAadhar change={change} />} */}
     </>
   );
 }

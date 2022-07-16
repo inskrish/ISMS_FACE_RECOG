@@ -53,7 +53,8 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
 
   const [showAdddetailsSuccess, set_showAdddetailsSuccess] = useState(false);
   const [showAdddetailsFail, set_showAdddetailsFail] = useState(false);
-  
+  const [isError, setIsError] = useState(false);
+  const [isAadharError, setIsAadharError] = useState(false);
   const [data, setData] = useState({
     name: "",
     rank: "",
@@ -64,6 +65,7 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
     blacklist: "No",
     snumber: "",
     token: "",
+    supervisor:""
     // superviser_name:""
   });
 
@@ -94,6 +96,7 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
     form.append("gender", data.gender);
     form.append("snumber", data.snumber);
     form.append("token", data.token);
+    form.append("supervisor", data.supervisor);
     // form.append("superviser_name", data.superviser_name);
 
     form.append("photo0", props.data[0]);
@@ -104,6 +107,7 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
     // form.append("token", data.token);
 
     const response = await axios.post(baseURL2, form);
+
     if (response.data === "success") {
       set_closeCurr(false);
       set_showNext(false);
@@ -125,6 +129,32 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
+  }
+  function phoneHandle(e) {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    
+    if(e.target.value.length > 10) {
+      setIsError(true)
+    }
+    else{
+      setIsError(false)
+      
+    }
+    
+    console.log(newData)
+    console.log(e.target.value)
+  }
+
+  function aadharHandle(e) {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    if(e.target.value.length > 12) {
+      setIsAadharError(true)
+    }
+    else{
+      setIsAadharError(false)
+    }
   }
 
   function set_add_details() {}
@@ -159,46 +189,63 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
               <Form.Control.Feedback>Nice!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4">
+              <Form.Label className="form">SNumber</Form.Label>
+              <Form.Control
+                id="snumber"
+                onChange={(e) => handle(e)}
+                value={data.snumber}
+                required
+                type="text"
+                placeholder="snumber"
+              />
+              <Form.Control.Feedback>Nice!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label className="form">Phone Number</Form.Label>
               <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                <InputGroup.Text id="inputGroupPrepend">Ph.</InputGroup.Text>
                 <Form.Control
                   id="phnumber"
-                  onChange={(e) => handle(e)}
+                  pattern="[0-9]{10}"
+                  
+                  onChange={(e) => phoneHandle(e)}
                   //   value={data.number}
-                  type="text"
+                  type="number"
                   placeholder="Number"
                   aria-describedby="inputGroupPrepend"
                   required
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide number.
-                </Form.Control.Feedback>
+                
+              
               </InputGroup>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="6">
-              <Form.Label className="form">Superviser Name</Form.Label>
+          <Form.Group as={Col} md="4">
+              <Form.Label className="form">Superviser</Form.Label>
               <Form.Control
-                id="snumber"
+                aria-label="Default select "
+                id="supervisor"
+                as="select"
                 onChange={(e) => handle(e)}
-                // value={data.snumber}
-                type="text"
-                placeholder="Superviser Name"
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a SNumber.
-              </Form.Control.Feedback>
+                
+              >
+              {sup.map((option,index)=>(
+                <option  key={index} value={option.value}>{sup[index]}</option>
+               
+
+              ))}
+                
+              </Form.Control>
+              
             </Form.Group>
             <Form.Group as={Col} md="3">
               <Form.Label className="form">AadharCard number</Form.Label>
               <Form.Control
                 id="aadhar"
-                onChange={(e) => handle(e)}
+                onChange={(e) => aadharHandle(e)}
                 // value={data.aadhar}
-                type="text"
+                type="number"
                 placeholder="AadharCard number"
                 required
               />
@@ -347,6 +394,12 @@ const baseURL2 = "http://11.0.0.221:8000/saveDetails/";
           )}
           {showAdddetailsFail && (
             <Alert variant="danger">User Details already exist..!</Alert>
+          )}
+          {isError && (
+            <Alert variant="danger">Enter valid Phone number</Alert>
+          )}
+          {isAadharError && (
+            <Alert variant="danger">Enter valid AadharCard number</Alert>
           )}
         </Form>
       )}

@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import { isMobile } from "react-device-detect";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from "../Context/WebcamContext";
-
+import { WebcamCaptureMain } from "./WebcamCaptureMain";
 
 function Clicktostart({state}) {
   // const [isCaptureEnable, setCaptureEnable] = useState(true);
@@ -59,7 +59,7 @@ function Clicktostart({state}) {
       </Button> */}
       {/* {isCaptureEnable && <WebcamCapture setShowOpenBtn={showOpenBtnFn} />} */}
       {console.log(display_webcam)}
-      
+      {/* {isCaptureEnable && <WebcamCaptureMain />} */}
       {isCaptureEnable && <WebcamCapture state={state}/>}
 
     </div>

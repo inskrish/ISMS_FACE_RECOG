@@ -19,9 +19,8 @@ import "./web.css";
 var i = 0;
 var data = [];
 const baseURL = "http://11.0.0.221:8000/uploadImage/";
-
-export const WebcamCapture = (props) => {
-  // console.log(props.click);
+export const WebcamCaptureMain = (props) => {
+ // console.log(props.click);
   // const { setShowOpenBtn } = props;
   const {
     display_webcam,
@@ -38,9 +37,7 @@ export const WebcamCapture = (props) => {
 
   const [disbleCapture, setDisbleCapture] = useState(true);
   const [display_form, set_display_form] = useState(false);
-  const [aadhar_form, set_aadhar_form] = useState(false);
   const [disable_btn, set_btn] = useState(true);
-  const [showImage,setShowImage]=useState(true)
   // const [display_webcam, set_display_webcam] = useState(false);
 
   const [settling_props, set_settling_props] = useState({
@@ -108,12 +105,11 @@ export const WebcamCapture = (props) => {
     console.log(response.data);
 
     if (response.data === "unknown") {
-      alert("You are unknown try with aadhar number!!");
-      set_show_Warning_alert(true)
-      set_aadhar_form(true);
+      // alert("You are unknown try with aadhar number!!");
+      set_display_form(false);
       set_show_spinner(false);
       set_btn(true);
-      
+      set_show_Warning_alert(true)
 
     } else {
       set_show_Success_alert(true)
@@ -189,13 +185,10 @@ console.log("here"+props.state);
       borderLeft: "solid gray 1px"
     }
   };
+
   return (
-    <>
-      <div style={styles.Container }>
-        <Row style={styles.row}>
-          {display_webcam && !aadhar_form &&(
-            
-            <Col sm={4} style={styles.col}>
+    <div>
+        <Col sm={4 } style={{display:"flex",justifyContent:"center"}} >
               {/* <Dialog open={open} fullWidth onClose={handleClose}> */}
 
               {/* { display_webcam &&  */}
@@ -207,7 +200,7 @@ console.log("here"+props.state);
                 { show_Warning_alert &&  <SuccessAlert/>}
              
               <>
-                <div style={{ padding: "1rem", marginLeft: "0" }}>
+                <div style={{ padding: "1rem"  }}>
                   <Webcam
                     audio={false}
                     ref={webcamRef}
@@ -298,30 +291,7 @@ console.log("here"+props.state);
                 </div>
               </div>
             </Col>
-            
-            
-          )}
+    </div>
+  )
+}
 
-          {aadhar_form &&
-          <Col style={styles.col}>
-            {<GetAadhar />}
-            </Col>
-          }
-          {display_form && (
-            <div className="col-sm" style={styles1}>
-            {display_form &&<div style={styles.verticalLine}></div>}
-            {display_form && <FormExample data={settling_props} />}
-            {display_form &&<div style={styles.verticalLine}></div>}
-            { showImage && display_form && <ImageComponent data={settling_props} setShowImage={setShowImage} />}
-            {/* </Dialog> */}
-            </div>
-          )
-          }
-          
-        </Row>
-      </div>
-    </>
-  );
-};
-
-// export default WebcamCapture

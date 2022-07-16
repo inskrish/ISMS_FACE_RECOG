@@ -11,11 +11,11 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
-
+import { Alert } from "react-bootstrap";
 
 const baseURL = "http://11.0.0.221:8000/uploadAadhaar/";
 
-function GetAadhar() {
+function GetAadhar(props) {
   
 
   const { display_webcam, set_display_webcam ,sm_value ,set_sm_value} = useContext(UserContext);
@@ -24,6 +24,8 @@ function GetAadhar() {
     const [show_form, set_show_form]=useState(true);
     const [radioValue, setRadioValue] = useState(true);
     const [checked, setChecked] = useState(false);
+    const [isAadharError, setIsAadharError] = useState(false);
+    const [isAadhar, setIsAadhar] = useState(false);
     const [value, setValue] = useState([1, 2]);
   const [data, setData] = useState({
     aadhaar: "",
@@ -57,6 +59,8 @@ const styles1 = {
     snumber: "",
     image: "",
   });
+  // const [change,setChange]=('false')
+  // setChange(props.change)
   const [display_form, set_display_form] = useState(false);
   const [display_Add_new, set_display_Add_new] = useState(false);
   // const [new_entry, set_new_entry] = useState(false);
@@ -100,17 +104,28 @@ const styles1 = {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
+    if(e.target.value.length > 12) {
+      setIsAadharError(true)
+    }
+    else if (e.target.value.length == 12){
+        setIsAadhar(true)
+    }
+    else{
+      setIsAadharError(false)
+    }
   }
+
+ 
   
   return (
     <>
      
         
-    {show_form &&
+    {  show_form &&
       
         <Form onSubmit={(e) => submit(e)}>
 
-        <Row className="mb-3">
+        <Row className="flex-container" style={{width:"50%" ,marginBottom:'1%' ,display:'grid' }}>
         <Form.Group as={Col} >
         <Form.Label className="form">Aadhar Card Number</Form.Label>
           <Form.Control
@@ -125,12 +140,16 @@ const styles1 = {
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
         </Row>
+        {isAadharError && (
+            <Alert variant="danger">Enter valid AadharCard number</Alert>
+          )}
 
 
-        <Container gap={2} className="col-md-5 mx-auto my-3">
-        <Button type='submit' variant="primary col-md-3 mx-3">Get Details</Button>
-      </Container>
-
+        <div  style={{width:'50%',left:'50%'}}>
+        <Button type='submit' disabled={isAadhar} variant="primary col-md-3 " >Get Details</Button>
+        </div>
+        
+        
         </Form>
         }
 

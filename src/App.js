@@ -16,6 +16,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import FormExample from "./Components/FormComponent/FormExample";
+import { Header } from "./Components/Header/Header";
+
 function App() {
 
   const [showAddUser, set_showAddUser] = useState(false);
@@ -55,31 +57,24 @@ function App() {
 };
 
   return (
-    // <>
+     <>
+    
         <UserContextProvider>
-        
+          
           <div className="App">
-
+          <Header/>
           <SideNavBar/>    
-        <div className="tittle mb-0">
-        <img 
-          className="logo"
-          src={require("./mylogo.png")}
-          width="110px"
-          height="110px"
-          alt="INS Valsura"
-        />
-        <span>AI Based Facial Recognition System</span>
-        </div>
+        
         
     <div className="bodyContainer">
-    <ToggleSwitch label="Input Method" stateChanger={setState}  />
+
       {showgetadhaar && <Clicktostart state={state} /> }
       {showAddUser && <Clicktostartphotodetail />}
     </div>
       <div className="FooterClass"><Footer /></div>
       </div>
       </UserContextProvider>
+      </>
   );
 }
 

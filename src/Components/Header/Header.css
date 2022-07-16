@@ -1,0 +1,25 @@
+.tittle{
+  
+    box-sizing: border-box;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    
+    align-items: center;
+    
+    text-align: center;
+    margin-bottom: 1em;
+    background-color: rgb(144, 144, 144);
+    background-color: rgba(0,0,0, 0.2);
+   
+    color: rgb(35, 4, 70);
+    
+  
+  
+}
+
+.tittle span{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font: weight 100%;
+  font-size: 350%;
+}
